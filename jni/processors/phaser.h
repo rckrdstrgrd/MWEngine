@@ -67,7 +67,7 @@ class Phaser : public BaseProcessor
         float _lfoInc;
         float _rate;
 
-        std::vector<std::vector<AllPassDelay*>>* _alps;
+        std::vector<std::vector<AllPassDelay*> >* _alps;
 
         void init( float aRate, float aFeedback, float aDepth, float aMinFreq, float aMaxFreq, int amountOfChannels );
 };

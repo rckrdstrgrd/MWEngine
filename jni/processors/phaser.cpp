@@ -167,7 +167,7 @@ void Phaser::init( float aRate, float aFeedback, float aDepth, float aMinFreq, f
     _fb       = aFeedback;
     _depth    = aDepth;
 
-    _alps = new std::vector<std::vector<AllPassDelay*>>( amountOfChannels );
+    _alps = new std::vector<std::vector<AllPassDelay*> >( amountOfChannels );
 
     for ( int i = 0; i < _channels; ++i ) {
         _alps->at( i ) = std::vector<AllPassDelay*>( STAGES );
