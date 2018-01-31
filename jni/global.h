@@ -52,7 +52,7 @@
 #define LOGTAG "MWENGINE" // the logtag used when logging messages to logcat
 
 // if you wish to use the engine without JNI support (for C++ only usage), comment the USE_JNI definition
-#define USE_JNI
+//#define USE_JNI
 
 namespace AudioEngineProps
 {
