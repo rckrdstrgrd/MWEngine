@@ -45,9 +45,7 @@ namespace Notifier
                                                                           std::vector<Observer*>() ));
 
         it = _observerMap.find( aNotificationType );
-        std::vector<Observer*> observers = it->second;
-
-        observers.push_back( aObserver );
+        it->second.push_back( aObserver );
     }
 
     void unregisterObserver( int aNotificationType, Observer* aObserver )

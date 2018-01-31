@@ -29,8 +29,8 @@ class Observer
         Observer();
         ~Observer();
 
-        void handleNotification( int aNotificationType );
-        void handleNotification( int aNotificationType, int aValue );
+        virtual void handleNotification( int aNotificationType );
+        virtual void handleNotification( int aNotificationType, int aValue );
 };
 
 #endif
