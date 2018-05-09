@@ -40,6 +40,8 @@ class Notifications
             RECORDING_STATE_UPDATED,
             BOUNCE_COMPLETE,
 
+            UI_SYNC,
+
             STATUS_BRIDGE_CONNECTED,
 
             ERROR_HARDWARE_UNAVAILABLE,

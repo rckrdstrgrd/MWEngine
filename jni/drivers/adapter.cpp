@@ -24,7 +24,7 @@
 #include "../audioengine.h"
 
 #if DRIVER == 0
-OPENSL_STREAM* driver_openSL = NULL; // OpenSL
+OPENSL_STREAM *driver_openSL = NULL; // OpenSL
 #elif DRIVER == 1
 AAudio_IO* driver_aAudio = NULL;     // AAudio
 #endif
@@ -37,10 +37,10 @@ namespace DriverAdapter {
 
         // OpenSL
         driver_openSL = android_OpenAudioDevice(
-            AudioEngineProps::SAMPLE_RATE, AudioEngineProps::INPUT_CHANNELS,
-            AudioEngineProps::OUTPUT_CHANNELS, AudioEngineProps::BUFFER_SIZE
+                AudioEngineProps::SAMPLE_RATE, AudioEngineProps::INPUT_CHANNELS,
+                AudioEngineProps::OUTPUT_CHANNELS, AudioEngineProps::BUFFER_SIZE
         );
-        return ( driver_openSL != NULL );
+        return (driver_openSL != NULL);
 
 #elif DRIVER == 1
 
@@ -61,7 +61,7 @@ namespace DriverAdapter {
 
 #if DRIVER == 0
         // OpenSL
-        android_CloseAudioDevice( driver_openSL );
+        android_CloseAudioDevice(driver_openSL);
         delete driver_openSL;
         driver_openSL = NULL;
 #elif DRIVER == 1
@@ -77,7 +77,7 @@ namespace DriverAdapter {
 #if DRIVER == 0
         // OpenSL maintains its own locking mechanism, we can invoke
         // the render cycle directly from the audio engine thread loop
-        AudioEngine::render( AudioEngineProps::BUFFER_SIZE );
+        AudioEngine::render(AudioEngineProps::BUFFER_SIZE);
 #elif DRIVER == 1
         // AAudio triggers its callback internally when ready
         // AAudio driver will request render() on its own
@@ -85,25 +85,38 @@ namespace DriverAdapter {
 #endif
     }
 
-    void writeOutput( float* outputBuffer, int amountOfSamples ) {
+    void writeOutput(float *outputBuffer, int amountOfSamples) {
 
 #if DRIVER == 0
         // OpenSL
-        android_AudioOut( driver_openSL, outputBuffer, amountOfSamples );
+        android_AudioOut(driver_openSL, outputBuffer, amountOfSamples);
 #elif DRIVER == 1
         // AAudio
         driver_aAudio->enqueueBuffer( outputBuffer, amountOfSamples );
 #endif
     }
 
-    int getInput( float* recordBuffer ) {
+    void writeOutput(short *outputBuffer, int amountOfSamples) {
+        android_AudioOut_short(driver_openSL, outputBuffer, amountOfSamples);
+    }
+
+    int getInput(float *recordBuffer) {
 
 #if DRIVER == 0
         // OpenSL
-        return android_AudioIn( driver_openSL, recordBuffer, AudioEngineProps::BUFFER_SIZE );
+        return android_AudioIn(driver_openSL, recordBuffer, AudioEngineProps::BUFFER_SIZE);
 #endif
         // TODO: no AAudio recording yet
 
+        return 0;
+    }
+
+    float getTimestamp() {
+#if DRIVER == 0
+        // OpenSL
+        return android_GetTimestamp(driver_openSL);
+#endif
+        // TODO: AAudio
         return 0;
     }
 }

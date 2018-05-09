@@ -27,12 +27,14 @@
 #include "audiochannel.h"
 #include "global.h"
 #include "processingchain.h"
+#include "ringbuffer_cinder.h"
 
 /**
  * this is the API exposed to an external application
  * for interacting with the AudioEngine (it does nothing
  * more than prepare and start / stop / reset the render thread
  */
+typedef RingBufferT<short> RingBufferCinder;
 namespace AudioEngine
 {
     /* public methods */
@@ -79,11 +81,12 @@ namespace AudioEngine
     extern int loopAmount;   // amount of samples we must read from the current loop ranges start offset (== min_buffer_position)
     extern int outputChannels;
     extern bool isMono;
-    extern float* outbuffer;
+    extern float * outbuffer;
     extern float* recbufferIn;
     extern AudioBuffer* inBuffer;
     extern AudioBuffer* recBuffer;
     extern std::vector<AudioChannel*>* channels;
+
 
     /* buffer read/write pointers */
 
@@ -126,5 +129,8 @@ namespace AudioEngine
     extern bool test_successful;
     extern int render_iterations;
     extern float mock_opensl_time;
+
+    float getTimestamp();
+    int writeToAudioRingBuffer(short *sampels, int numOfSampels);
 }
 #endif

@@ -1,0 +1,5 @@
+void BaseAudioEvent::mixBuffer
+	why check bufferposistion against start point here also, it is already done
+	in Sequencer::collectSequencedEvents 
+
+

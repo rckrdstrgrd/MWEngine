@@ -47,11 +47,14 @@ namespace DriverAdapter {
     // write the contents of given outputBuffer into the drivers output
     // so we can hear sound. outputBuffer contains interleaved samples
     void writeOutput( float *outputBuffer, int amountOfSamples );
+    void writeOutput(short *outputBuffer, int amountOfSamples );
 
     // get the input buffer from the driver (when recording)
     // and write it into given recordBuffer
     // returns integer value of amount of recorded samples
     int getInput( float* recordBuffer );
+
+    float getTimestamp();
 }
 
 // whether to include the OpenSL, AAudio or mocked (unit test mode) driver for audio output
