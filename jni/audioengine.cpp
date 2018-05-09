@@ -111,7 +111,7 @@ namespace AudioEngine {
         AudioEngineProps::SAMPLE_RATE = sampleRate;
         AudioEngineProps::OUTPUT_CHANNELS = amountOfChannels;
 
-        tempOutBuffer = (short *) calloc((size_t) AudioEngineProps::BUFFER_SIZE, sizeof(short));
+        tempOutBuffer = (short *) calloc(static_cast<size_t>(AudioEngineProps::BUFFER_SIZE * 4), sizeof(short));
     }
 
     /**
@@ -361,6 +361,7 @@ namespace AudioEngine {
         // write the accumulated buffers into the output buffer
         std::memset(tempOutBuffer, 0, amountOfSamples * 2 * sizeof(short));
         bool syncSpotify = false;
+
         if (SpotifyBuffer::canRender(amountOfSamples * 2) && Sequencer::playing) {
             SpotifyBuffer::render(tempOutBuffer, amountOfSamples * 2);
             syncSpotify = true;
