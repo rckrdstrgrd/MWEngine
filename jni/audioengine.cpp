@@ -104,7 +104,6 @@ namespace AudioEngine {
     static int thread;
 
     short *tempOutBuffer;
-    bool count = false;
 
     void setup(int bufferSize, int sampleRate, int amountOfChannels) {
         AudioEngineProps::BUFFER_SIZE = bufferSize;
@@ -398,6 +397,10 @@ namespace AudioEngine {
                 if (marked_buffer_position > 0 && bufferPosition == marked_buffer_position)
                     Notifier::broadcast(Notifications::MARKER_POSITION_REACHED);
 
+                if (bufferPosition == AudioEngineProps::BUFFER_SIZE) {
+                    Notifier::broadcast(Notifications::UI_SYNC);
+                }
+
                 bufferPosition++;
 
                 if (bufferPosition > max_buffer_position)
@@ -405,9 +408,7 @@ namespace AudioEngine {
             }
         }
 
-
         // write the synthesized output into the audio driver
-
         if (!bouncing && syncSpotify)
             DriverAdapter::writeOutput(outbuffer, amountOfSamples * 2);
 
