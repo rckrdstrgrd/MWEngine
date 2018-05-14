@@ -94,7 +94,7 @@ namespace AudioEngine {
     int bufferPosition = 0;
     int stepPosition = 0;
 
-    int samples_per_ui_sync;
+    int uiSyncSamplePosition = 0;
 
     /* output related */
 
@@ -397,11 +397,11 @@ namespace AudioEngine {
                 if (marked_buffer_position > 0 && bufferPosition == marked_buffer_position)
                     Notifier::broadcast(Notifications::MARKER_POSITION_REACHED);
 
-                if (bufferPosition == AudioEngineProps::BUFFER_SIZE) {
+                if (uiSyncSamplePosition == AudioEngineProps::BUFFER_SIZE) {
                     Notifier::broadcast(Notifications::UI_SYNC);
                 }
 
-                bufferPosition++;
+                bufferPosition++,uiSyncSamplePosition++;
 
                 if (bufferPosition > max_buffer_position)
                     bufferPosition = min_buffer_position;

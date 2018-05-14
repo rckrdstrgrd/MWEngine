@@ -84,6 +84,9 @@ void SequencerController::setVolume( float aVolume )
 void SequencerController::setPlaying( bool aIsPlaying )
 {
     Sequencer::playing = aIsPlaying;
+    if(!aIsPlaying){
+        AudioEngine::uiSyncSamplePosition = 0;
+    }
 }
 
 void SequencerController::setLoopRange( int aStartPosition, int aEndPosition )

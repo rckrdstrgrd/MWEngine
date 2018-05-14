@@ -92,7 +92,8 @@ namespace AudioEngine
 
     extern int bufferPosition;      // the current sequence position in samples "playback head" offset ;-)
     extern int stepPosition;        // the current sequence bar subdivided position (e.g. 16th note of a bar)
-    extern int playbackPos;
+
+    extern int uiSyncSamplePosition;
 
     /* tempo related */
 
